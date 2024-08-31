@@ -73,4 +73,38 @@ describe('Test Saucedemo', () => {
         await expect(item).toHaveText('Sauce Labs Backpack');
         await expect(price).toHaveText('$29.99');
     });
+
+    it('Test 9 - Click button checkout', async() => {
+        const checkoutButton = await browser.$('#checkout');
+        await checkoutButton.click();
+        
+
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html');
+        browser.pause(2000);
+        expect(browser).toHaveTitle('Swag Labs');
+    });
+
+    it('Test 10 - Memasukan data diri untuk checkout', async() => {
+        const firstName = await browser.$('#first-name');
+        const lastName = await browser.$('#last-name');
+        const address = await browser.$('#postal-code');
+
+        await firstName.addValue('Reza');
+        await lastName.addValue('Paramarta');
+        await address.addValue('12345');
+        await browser.pause(1000);
+
+        const continueButton = await browser.$('#continue');
+        await continueButton.click();
+
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html');
+        browser.pause(2000);
+    });
+    it('Test 11 - Finish Transaction', async() => {
+        const buttonFinish = await browser.$('#finish');
+
+        await buttonFinish.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/order-receipt.html');
+    });
 });
+
